@@ -30,18 +30,22 @@ const App = () => {
   const Stack = createNativeStackNavigator();
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Transaction" component={Transaction} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    // <SafeAreaView style={backgroundStyle}>
+    //   <StatusBar
+    //     barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+    //     backgroundColor={backgroundStyle.backgroundColor}
+    //   />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name="Transaction" component={Transaction} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    // </SafeAreaView>
   );
 };
 

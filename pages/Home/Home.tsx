@@ -1,19 +1,13 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  Component,
-  ComponentProps,
-} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Text,
   View,
-  Button,
   ScrollView,
   Alert,
   StyleSheet,
   RefreshControl,
 } from 'react-native';
+import {useForm} from 'react-hook-form';
 
 import api from '../../services/api';
 
@@ -21,16 +15,13 @@ import {IChild} from '../../types/types';
 
 import Child from '../../components/child';
 import Input from '../../components/input';
-import {useForm} from 'react-hook-form';
-
+import Button from '../../components/button';
 import {Modal} from '../../components/modal';
 
-const Home = ({navigation}) => {
+const Home = ({navigation}: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [child, setChild] = useState<IChild[]>([
-    {id: 0, name: 'Ana Luiza', balance: 5},
-  ]);
+  const [child, setChild] = useState<IChild[]>([] as IChild[]);
   const {control, handleSubmit} = useForm();
 
   const getChild = async () => {
@@ -42,7 +33,6 @@ const Home = ({navigation}) => {
           },
         },
       });
-
       setChild(data.child);
     } catch (error) {
       const data = error.response.data;
@@ -59,7 +49,7 @@ const Home = ({navigation}) => {
         },
       });
 
-      await getChild;
+      await getChild();
       Alert.alert(data.message);
     } catch (error) {
       const data = error.response.data;
@@ -70,7 +60,7 @@ const Home = ({navigation}) => {
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await getChild;
+    await getChild();
     setRefreshing(false);
   }, []);
 
@@ -79,14 +69,14 @@ const Home = ({navigation}) => {
       height: '100%',
     },
     childList: {
-      justifyContent: 'space-evenly',
+      justifyContent: child.length === 1 ? 'flex-start' : 'space-evenly',
       alignItems: 'center',
       margin: 10,
-      flexGrow: 1,
-      minHeight: '90%',
+      paddingVertical: 5,
     },
     welcome: {
       alignSelf: 'center',
+      fontSize: 24,
     },
     button: {
       width: '25%',
@@ -114,13 +104,13 @@ const Home = ({navigation}) => {
           <Modal.Footer>
             <View style={homeStyle.buttons}>
               <Button
-                title={'Create new child'}
-                onPress={handleSubmit(newChild)}
+                text="Create new child"
+                displayFunction={handleSubmit(newChild)}
               />
               <Button
-                title={'Cancel'}
-                color={'red'}
-                onPress={() => {
+                text="Cancel"
+                type="danger"
+                displayFunction={() => {
                   setModalVisible(!modalVisible);
                 }}
               />
@@ -132,24 +122,26 @@ const Home = ({navigation}) => {
       <View style={homeStyle.container}>
         <Text style={homeStyle.welcome}>Welcome, Luana</Text>
         <Button
-          onPress={() => setModalVisible(!modalVisible)}
-          title="New Child"
+          displayFunction={() => setModalVisible(!modalVisible)}
+          text="New Child"
         />
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          contentContainerStyle={homeStyle.childList}>
-          {child.map(({id, name, balance}) => (
-            <Child
-              id={id}
-              name={name}
-              balance={balance}
-              key={`${name}${id}`}
-              navigate={navigation}
-            />
-          ))}
-        </ScrollView>
+        <View style={{height: '85%'}}>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={homeStyle.childList}>
+            {child.map(({id, name, balance}) => (
+              <Child
+                id={id}
+                name={name}
+                balance={balance}
+                key={`${name}${id}`}
+                navigate={navigation}
+              />
+            ))}
+          </ScrollView>
+        </View>
       </View>
     </View>
   );

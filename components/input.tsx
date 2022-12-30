@@ -2,7 +2,9 @@ import {TextInput, Text, View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
 import React from 'react';
 
-const Input = ({name, control, secured = false}) => {
+import {IInput} from '../types/types';
+
+const Input = ({name, control, secured = false}: IInput) => {
   const {field} = useController({
     control,
     defaultValue: '',

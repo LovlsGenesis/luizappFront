@@ -1,20 +1,23 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import Transaction from '../pages/Transaction/Transaction';
+import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {IChild} from '../types/types';
 
-const Child = ({id, name, balance}: IChild, navigate) => {
+const Child = ({id, name, balance}: IChild) => {
+  const navigation = useNavigation();
+
   const childStyle = StyleSheet.create({
     child: {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: '75%',
+      maxHeight: 65,
       backgroundColor: 'grey',
       padding: 15,
       margin: 5,
-      borderRadius: 25,
+      borderRadius: 5,
     },
     name: {
       fontSize: 24,
@@ -25,16 +28,10 @@ const Child = ({id, name, balance}: IChild, navigate) => {
     },
   });
 
-  const handleOnPress = () => {
-    console.log(
-      // RootNavigation,
-      navigate('Transaction', {}),
-    );
-    navigate(Transaction, {});
-  };
-
   return (
-    <TouchableOpacity style={childStyle.child} onPress={handleOnPress}>
+    <TouchableOpacity
+      style={childStyle.child}
+      onPress={() => navigation.navigate('Transaction', {id, balance, name})}>
       <Text style={childStyle.name}>{name}</Text>
       <Text style={childStyle.balance}>{balance} ⭐</Text>
     </TouchableOpacity>
