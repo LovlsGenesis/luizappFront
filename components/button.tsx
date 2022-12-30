@@ -14,6 +14,7 @@ const Button = ({text, displayFunction, type = 'primary'}: IButton) => {
       padding: 10,
       elevation: 4,
       borderRadius: 5,
+      minWidth: 100,
     },
     text: {
       fontWeight: '500',

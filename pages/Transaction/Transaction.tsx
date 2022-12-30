@@ -12,22 +12,54 @@ import TransactionComponent from '../../components/transactionComponent';
 import TransactionTypeKey from '../../components/transactionTypeKey';
 import Button from '../../components/button';
 import {ITransaction, transactionTypeBackgroundColor} from '../../types/types';
+import {Modal} from '../../components/modal';
+import Input from '../../components/input';
+import {useForm} from 'react-hook-form';
+
+type ITransactionForm = {
+  type: string;
+  value: number;
+  description: string;
+};
 
 const Transaction = ({route}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const {control, handleSubmit} = useForm();
   const [refreshing, setRefreshing] = useState(false);
+  const [types, setTypes] = useState<string[]>([]);
   const [transactions, setTransactions] = useState<ITransaction[]>(
     [] as ITransaction[],
   );
-  const {id, balance, name} = route.params;
+  const {id: childId, balance, name} = route.params;
+
+  const getTypes = async () => {
+    const {data} = await api.get('transactions/types');
+    setTypes(Object.values(data));
+  };
+
   const getTransactions = async () => {
     const {data} = await api.get('/children/transactions', {
       params: {
         child: {
-          id,
+          id: childId,
         },
       },
     });
     setTransactions(data.transactions);
+  };
+
+  const newTransaction = async params => {
+    await api.post('transactions/new', {
+      transaction: {
+        type: params.type,
+        value: params.value,
+        parent_id: 1,
+        description: params.description,
+      },
+      child: {
+        id: childId,
+      },
+    });
   };
 
   const onRefresh = useCallback(async () => {
@@ -64,20 +96,57 @@ const Transaction = ({route}) => {
       fontSize: 20,
       fontWeight: '500',
     },
+    buttons: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
   });
 
   useEffect(() => {
     getTransactions();
+    getTypes();
   }, []);
 
   return (
     <View>
+      <Modal isVisible={modalVisible}>
+        <Modal.Container>
+          <Modal.Header title="Create new child" />
+          <Modal.Body>
+            <Input
+              type="select"
+              name="type"
+              options={types}
+              control={control}
+            />
+            <Input name="value" control={control} />
+            <Input name="description" control={control} />
+          </Modal.Body>
+          <Modal.Footer>
+            <View style={style.buttons}>
+              <Button
+                text="Create new transaction"
+                displayFunction={handleSubmit(newTransaction)}
+              />
+              <Button
+                text="Cancel"
+                type="danger"
+                displayFunction={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              />
+            </View>
+          </Modal.Footer>
+        </Modal.Container>
+      </Modal>
+
       <View style={style.header}>
         <Text style={style.balance}>Balance: {balance} ⭐</Text>
         <Button
           text="New Transaction"
           type="primary"
-          displayFunction={() => Alert.alert('Hello World')}
+          displayFunction={() => setModalVisible(true)}
         />
       </View>
       <View style={style.KeysView}>

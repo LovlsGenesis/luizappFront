@@ -36,6 +36,8 @@ export const buttonTypeColor = {
 };
 
 export type IInput = {
+  type?: string;
+  options?: any[];
   control: Control;
   name: string;
   secured?: boolean;

@@ -1,10 +1,14 @@
+import React, {useState} from 'react';
 import {TextInput, Text, View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
-import React from 'react';
 
 import {IInput} from '../types/types';
 
-const Input = ({name, control, secured = false}: IInput) => {
+const Input = ({name, control, secured = false, type, options}: IInput) => {
+  const [selectedType, setSelectedType] = useState('');
+
+  const Select = () => {};
+
   const {field} = useController({
     control,
     defaultValue: '',
@@ -39,6 +43,7 @@ const Input = ({name, control, secured = false}: IInput) => {
         secureTextEntry={secured}
         style={inputStyle.input}
       />
+      {type === 'select' && <Select />}
     </View>
   );
 };

@@ -87,6 +87,13 @@ const Home = ({navigation}: any) => {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
     },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginVertical: 5,
+      marginHorizontal: 10,
+    },
   });
 
   useEffect(() => {
@@ -99,7 +106,7 @@ const Home = ({navigation}: any) => {
         <Modal.Container>
           <Modal.Header title="Create new child" />
           <Modal.Body>
-            <Input name={'name'} control={control} />
+            <Input name="name" control={control} />
           </Modal.Body>
           <Modal.Footer>
             <View style={homeStyle.buttons}>
@@ -120,11 +127,13 @@ const Home = ({navigation}: any) => {
       </Modal>
 
       <View style={homeStyle.container}>
-        <Text style={homeStyle.welcome}>Welcome, Luana</Text>
-        <Button
-          displayFunction={() => setModalVisible(!modalVisible)}
-          text="New Child"
-        />
+        <View style={homeStyle.header}>
+          <Text style={homeStyle.welcome}>Welcome, Luana</Text>
+          <Button
+            displayFunction={() => setModalVisible(!modalVisible)}
+            text="New Child"
+          />
+        </View>
         <View style={{height: '85%'}}>
           <ScrollView
             refreshControl={

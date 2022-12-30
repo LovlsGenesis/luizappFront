@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "luizappFront.app"
-               BlueprintName = "luizappFront"
-               ReferencedContainer = "container:luizappFront.xcodeproj">
+               BuildableName = "Luizapp.app"
+               BlueprintName = "Luizapp"
+               ReferencedContainer = "container:Luizapp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "luizappFrontTests.xctest"
-               BlueprintName = "luizappFrontTests"
-               ReferencedContainer = "container:luizappFront.xcodeproj">
+               BuildableName = "LuizappTests.xctest"
+               BlueprintName = "LuizappTests"
+               ReferencedContainer = "container:Luizapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "luizappFront.app"
-            BlueprintName = "luizappFront"
-            ReferencedContainer = "container:luizappFront.xcodeproj">
+            BuildableName = "Luizapp.app"
+            BlueprintName = "Luizapp"
+            ReferencedContainer = "container:Luizapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "luizappFront.app"
-            BlueprintName = "luizappFront"
-            ReferencedContainer = "container:luizappFront.xcodeproj">
+            BuildableName = "Luizapp.app"
+            BlueprintName = "Luizapp"
+            ReferencedContainer = "container:Luizapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
