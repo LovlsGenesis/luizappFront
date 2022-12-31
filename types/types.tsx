@@ -1,4 +1,5 @@
 import {Control} from 'react-hook-form';
+import {KeyboardTypeOptions} from 'react-native';
 
 export type IChild = {
   id?: number;
@@ -41,4 +42,5 @@ export type IInput = {
   control: Control;
   name: string;
   secured?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 };

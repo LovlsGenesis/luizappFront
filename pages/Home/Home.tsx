@@ -22,7 +22,7 @@ const Home = ({navigation}: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [child, setChild] = useState<IChild[]>([] as IChild[]);
-  const {control, handleSubmit} = useForm();
+  const {control, handleSubmit, reset} = useForm();
 
   const getChild = async () => {
     try {
@@ -50,6 +50,7 @@ const Home = ({navigation}: any) => {
       });
 
       await getChild();
+      reset();
       Alert.alert(data.message);
     } catch (error) {
       const data = error.response.data;
@@ -118,6 +119,7 @@ const Home = ({navigation}: any) => {
                 text="Cancel"
                 type="danger"
                 displayFunction={() => {
+                  reset();
                   setModalVisible(!modalVisible);
                 }}
               />

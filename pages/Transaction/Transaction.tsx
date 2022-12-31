@@ -16,17 +16,11 @@ import {Modal} from '../../components/modal';
 import Input from '../../components/input';
 import {useForm} from 'react-hook-form';
 
-type ITransactionForm = {
-  type: string;
-  value: number;
-  description: string;
-};
-
 const Transaction = ({route}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const {control, handleSubmit} = useForm();
+  const {control, handleSubmit, reset} = useForm();
   const [refreshing, setRefreshing] = useState(false);
-  const [types, setTypes] = useState<string[]>([]);
+  const [types, setTypes] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<ITransaction[]>(
     [] as ITransaction[],
   );
@@ -34,7 +28,14 @@ const Transaction = ({route}) => {
 
   const getTypes = async () => {
     const {data} = await api.get('transactions/types');
-    setTypes(Object.values(data));
+    setTypes(
+      Object.values(data).map(type => {
+        return {
+          name: type,
+          code: type,
+        };
+      }),
+    );
   };
 
   const getTransactions = async () => {
@@ -49,17 +50,26 @@ const Transaction = ({route}) => {
   };
 
   const newTransaction = async params => {
-    await api.post('transactions/new', {
-      transaction: {
-        type: params.type,
-        value: params.value,
-        parent_id: 1,
-        description: params.description,
-      },
-      child: {
-        id: childId,
-      },
-    });
+    console.log(params);
+    try {
+      const {data} = await api.post('transactions/new', {
+        transaction: {
+          type: params.type,
+          value: params.value,
+          parent_id: 1,
+          description: params.description,
+        },
+        child: {
+          id: childId,
+        },
+      });
+      await getTransactions();
+      reset();
+      setModalVisible(!modalVisible);
+      Alert.alert(data.message);
+    } catch (error) {
+      Alert.alert(error.response.data.message);
+    }
   };
 
   const onRefresh = useCallback(async () => {
@@ -112,7 +122,7 @@ const Transaction = ({route}) => {
     <View>
       <Modal isVisible={modalVisible}>
         <Modal.Container>
-          <Modal.Header title="Create new child" />
+          <Modal.Header title="Create new transaction" />
           <Modal.Body>
             <Input
               type="select"
@@ -120,7 +130,7 @@ const Transaction = ({route}) => {
               options={types}
               control={control}
             />
-            <Input name="value" control={control} />
+            <Input name="value" control={control} keyboardType="numeric" />
             <Input name="description" control={control} />
           </Modal.Body>
           <Modal.Footer>
@@ -133,6 +143,7 @@ const Transaction = ({route}) => {
                 text="Cancel"
                 type="danger"
                 displayFunction={() => {
+                  reset();
                   setModalVisible(!modalVisible);
                 }}
               />

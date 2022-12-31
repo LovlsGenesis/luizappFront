@@ -1,13 +1,30 @@
 import React, {useState} from 'react';
 import {TextInput, Text, View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
+import Dropdown from 'react-native-input-select';
 
 import {IInput} from '../types/types';
 
-const Input = ({name, control, secured = false, type, options}: IInput) => {
-  const [selectedType, setSelectedType] = useState('');
-
-  const Select = () => {};
+const Input = ({
+  name,
+  control,
+  secured = false,
+  type,
+  options,
+  keyboardType = 'default',
+}: IInput) => {
+  const Select = (): JSX.Element => (
+    <Dropdown
+      dropdownContainerStyle={inputStyle.dropdown}
+      placeholder="Select a type..."
+      options={options}
+      optionLabel={'name'}
+      optionValue={'code'}
+      selectedValue={field.value}
+      onValueChange={field.onChange}
+      primaryColor={'green'}
+    />
+  );
 
   const {field} = useController({
     control,
@@ -30,6 +47,11 @@ const Input = ({name, control, secured = false, type, options}: IInput) => {
     text: {
       textAlign: 'center',
     },
+    dropdown: {
+      marginBottom: 10,
+      width: '75%',
+      alignSelf: 'center',
+    },
   });
 
   return (
@@ -37,13 +59,17 @@ const Input = ({name, control, secured = false, type, options}: IInput) => {
       <Text style={(inputStyle.margin5, inputStyle.text)}>
         {name[0].toUpperCase() + name.substr(1)}
       </Text>
-      <TextInput
-        value={field.value}
-        onChangeText={field.onChange}
-        secureTextEntry={secured}
-        style={inputStyle.input}
-      />
-      {type === 'select' && <Select />}
+      {type === 'select' ? (
+        <Select />
+      ) : (
+        <TextInput
+          value={field.value}
+          onChangeText={field.onChange}
+          secureTextEntry={secured}
+          style={inputStyle.input}
+          keyboardType={keyboardType}
+        />
+      )}
     </View>
   );
 };

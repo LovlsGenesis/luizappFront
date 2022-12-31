@@ -10,12 +10,14 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@react-native-community/checkbox": "^0.5.14",
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/native-stack": "^6.9.7",
     "axios": "^1.2.1",
     "react": "18.1.0",
     "react-hook-form": "^7.41.1",
     "react-native": "0.70.6",
+    "react-native-input-select": "^0.18.0",
     "react-native-modal": "^13.0.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.18.2",
