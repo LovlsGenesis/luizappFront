@@ -28,8 +28,10 @@ const TransactionComponent = ({
       overflow: 'scroll',
     },
     balance: {
+      flexDirection: 'row',
       fontSize: 18,
-      alignSelf: 'center',
+      textAlign: 'center',
+      marginLeft: 'auto',
     },
     infos: {
       alignSelf: 'center',

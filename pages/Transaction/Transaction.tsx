@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {
   RefreshControl,
   ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   View,
@@ -24,7 +25,8 @@ const Transaction = ({route}) => {
   const [transactions, setTransactions] = useState<ITransaction[]>(
     [] as ITransaction[],
   );
-  const {id: childId, balance, name} = route.params;
+  const {id: childId, balance: defaultBalance, name} = route.params;
+  const [balance, setBalance] = useState<number>(defaultBalance);
 
   const getTypes = async () => {
     const {data} = await api.get('transactions/types');
@@ -46,11 +48,11 @@ const Transaction = ({route}) => {
         },
       },
     });
+    setBalance(data.balance);
     setTransactions(data.transactions);
   };
 
   const newTransaction = async params => {
-    console.log(params);
     try {
       const {data} = await api.post('transactions/new', {
         transaction: {
@@ -93,7 +95,9 @@ const Transaction = ({route}) => {
     scrollView: {
       justifyContent: 'center',
       alignItems: 'center',
-      paddingVertical: 10,
+      marginVertical: 10,
+      flexGrow: 1,
+      paddingBottom: 20,
     },
     header: {
       flexDirection: 'row',
@@ -119,7 +123,7 @@ const Transaction = ({route}) => {
   }, []);
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Modal isVisible={modalVisible}>
         <Modal.Container>
           <Modal.Header title="Create new transaction" />
@@ -174,14 +178,14 @@ const Transaction = ({route}) => {
           text="Penalty"
         />
       </View>
-      <View style={{height: '90%'}}>
-        <ScrollView
+      <View>
+        {/* <ScrollView
           contentContainerStyle={style.scrollView}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }>
           {transactions.length === 0 ? (
-            <Text style={style.noTransactions}>{name} has no transaction</Text>
+
           ) : (
             transactions.map(transaction => (
               <TransactionComponent
@@ -191,7 +195,24 @@ const Transaction = ({route}) => {
               />
             ))
           )}
-        </ScrollView>
+        </ScrollView> */}
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          contentContainerStyle={style.scrollView}
+          data={transactions}
+          renderItem={({item, index}) => (
+            <TransactionComponent
+              {...item}
+              key={index}
+              // key={transaction.id.toString()}
+            />
+          )}
+          ListEmptyComponent={
+            <Text style={style.noTransactions}>{name} has no transaction</Text>
+          }
+        />
       </View>
     </View>
   );
