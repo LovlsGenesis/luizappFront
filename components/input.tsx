@@ -13,6 +13,7 @@ const Input = ({
   type,
   options,
   keyboardType = 'default',
+  placeholder,
 }: IInput) => {
   const {i18n} = useTranslation(['transaction', 'button', 'transaction']);
 
@@ -21,9 +22,13 @@ const Input = ({
       <Dropdown
         dropdownContainerStyle={inputStyle.dropdownContainer}
         dropdownStyle={inputStyle.dropdown}
-        placeholder={i18n.t('input.selectPlaceholder', {
-          type: name[0].toUpperCase() + name.substr(1),
-        })}
+        placeholder={
+          placeholder
+            ? i18n.t('input.selectPlaceholder', {
+                type: name[0].toUpperCase() + name.substr(1),
+              })
+            : ''
+        }
         options={options}
         optionLabel={'name'}
         optionValue={'code'}

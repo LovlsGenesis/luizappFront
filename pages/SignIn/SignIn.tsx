@@ -1,33 +1,47 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, StyleSheet, Text, View} from 'react-native';
 import Input from '../../components/input';
 import {useForm} from 'react-hook-form';
 import Button from '../../components/button';
 import {useAuth} from '../../context/AuthContext';
 import {useTranslation} from 'react-i18next';
+import api from '../../services/api';
 
 const SignIn = ({navigation}: any) => {
   const {control, handleSubmit, reset} = useForm();
+  const [parents, setParents] = useState<any[]>([]);
 
   const {i18n} = useTranslation(['signIn', 'button', 'input']);
   const {signIn} = useAuth();
 
   const handleSignIn = (params: any) => {
     try {
-      signIn({id: params.id, password: params.password});
+      signIn({id: params.login, password: params.password});
       reset();
     } catch (error) {
       Alert.alert(error.response.data.message);
     }
   };
+
+  const getParents = async () => {
+    try {
+      const {data} = await api.get('parents');
+      setParents(
+        Object.values(data).map(type => {
+          return {
+            name: type.name,
+            code: type.id,
+          };
+        }),
+      );
+    } catch (error) {}
+  };
+
   const handleSignUp = () => {
     navigation.navigate('Register');
   };
 
   const style = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
     title: {
       fontSize: 48,
       fontWeight: '500',
@@ -47,22 +61,30 @@ const SignIn = ({navigation}: any) => {
     input: {
       marginVertical: 20,
     },
+    forgotPass: {
+      textAlign: 'center',
+      marginTop: 10,
+    },
   });
+
+  useEffect(() => {
+    getParents();
+  }, []);
 
   return (
     <View style={style.form}>
       <Text style={style.title}>Luizapp</Text>
       {/* <Text style={style.signIn}>Sign in</Text> */}
       <View style={style.input}>
-        <Input name="id" control={control} />
+        <Input
+          name="login"
+          placeholder={false}
+          type="select"
+          options={parents}
+          control={control}
+        />
         <Input name="password" control={control} secured={true} />
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 10,
-          }}>
-          {i18n.t('signIn.forgotPass')}
-        </Text>
+        <Text style={style.forgotPass}>{i18n.t('signIn.forgotPass')}</Text>
       </View>
       <Button
         text={i18n.t('button.signIn')}

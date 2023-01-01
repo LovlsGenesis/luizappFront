@@ -1,9 +1,10 @@
 import React from 'react';
 import api from '../../services/api';
 import {useForm} from 'react-hook-form';
-import {View, Alert, Button} from 'react-native';
+import {View, Alert, StyleSheet} from 'react-native';
 import Input from '../../components/input';
 import {useTranslation} from 'react-i18next';
+import Button from '../../components/button';
 
 const Register = ({navigation}: any) => {
   const {control, handleSubmit} = useForm();
@@ -25,26 +26,40 @@ const Register = ({navigation}: any) => {
     }
   };
 
+  const style = StyleSheet.create({
+    form: {
+      flex: 1,
+      justifyContent: 'center',
+      alignSelf: 'center',
+      width: '80%',
+    },
+    input: {
+      marginVertical: 20,
+    },
+  });
+
   return (
-    <View style={{padding: 15}}>
-      <Input
-        name="type"
-        type="select"
-        options={[
-          {name: 'Father', code: 'father'},
-          {name: 'Mother', code: 'mother'},
-        ]}
-        control={control}
-      />
-      <Input name="name" control={control} />
-      <Input name="password" control={control} secured={true} />
+    <View style={style.form}>
+      <View style={style.input}>
+        <Input
+          name="type"
+          type="select"
+          options={[
+            {name: 'Father', code: 'father'},
+            {name: 'Mother', code: 'mother'},
+          ]}
+          control={control}
+        />
+        <Input name="name" control={control} />
+        <Input name="password" control={control} secured={true} />
+      </View>
       <Button
-        title={i18n.t('button.submit')}
-        onPress={handleSubmit(onSubmit)}
+        text={i18n.t('button.submit')}
+        displayFunction={handleSubmit(onSubmit)}
       />
       <Button
-        title={i18n.t('button.signIn')}
-        onPress={() => {
+        text={i18n.t('button.signIn')}
+        displayFunction={() => {
           navigation.navigate('SignIn');
         }}
       />

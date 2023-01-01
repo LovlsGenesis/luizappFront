@@ -43,6 +43,7 @@ export type IInput = {
   name: string;
   secured?: boolean;
   keyboardType?: KeyboardTypeOptions;
+  placeholder?: boolean;
 };
 
 export type IUser = {
