@@ -1,0 +1,36 @@
+{
+  "home": {
+    "welcome": "Bem vindo, {{name}}"
+  },
+  "signIn": {
+    "forgotPass": "Esqueci minha senha"
+  },
+  "button": {
+    "newChildButton": "Nova criança",
+    "createNewChild": "Criar nova criança",
+    "cancel": "Cancelar",
+    "newTransactionButton": "Nova transação",
+    "createNewTransaction": "Criar nova transação",
+    "signOut": "Sair",
+    "signIn": "Conectar",
+    "createNewAccount": "Criar conta",
+    "submit": "Enviar"
+  },
+  "transaction": {
+    "noTransaction":"{{name}} não tem transação",
+    "task": "Tarefa",
+    "penalty": "Penalidade",
+    "trade": "Troca",
+    "balance": "Saldo"
+  },
+  "input": {
+    "selectPlaceholder": "Adicionar {{type}}",
+    "name": "Nome",
+    "parent": "Pai",
+    "value": "Valor",
+    "description": "Descrição",
+    "type": "Tipo",
+    "password": "Senha",
+    "parentInfo": "Adiciona o pai / mãe ( Não obrigatorio )"
+  }
+}

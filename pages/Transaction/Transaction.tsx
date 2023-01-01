@@ -17,6 +17,7 @@ import {Modal} from '../../components/modal';
 import Input from '../../components/input';
 import {useForm} from 'react-hook-form';
 import {useAuth} from '../../context/AuthContext';
+import {useTranslation} from 'react-i18next';
 
 const Transaction = ({route}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,6 +30,7 @@ const Transaction = ({route}) => {
   const {id: childId, balance: defaultBalance, name} = route.params;
   const [balance, setBalance] = useState<number>(defaultBalance);
   const {localStorage: user} = useAuth();
+  const {i18n} = useTranslation(['transaction', 'button', 'transaction']);
 
   const getTypes = async () => {
     const {data} = await api.get('transactions/types');
@@ -85,7 +87,7 @@ const Transaction = ({route}) => {
   const style = StyleSheet.create({
     KeysView: {
       flexDirection: 'row',
-      width: '50%',
+      width: '65%',
       justifyContent: 'space-between',
       alignSelf: 'center',
       marginTop: 10,
@@ -128,7 +130,7 @@ const Transaction = ({route}) => {
     <View style={{flex: 1}}>
       <Modal isVisible={modalVisible}>
         <Modal.Container>
-          <Modal.Header title="Create new transaction" />
+          <Modal.Header title={i18n.t('button.createNewTransaction')} />
           <Modal.Body>
             <Input
               type="select"
@@ -142,11 +144,11 @@ const Transaction = ({route}) => {
           <Modal.Footer>
             <View style={style.buttons}>
               <Button
-                text="Create new transaction"
+                text={i18n.t('button.createNewTransaction')}
                 displayFunction={handleSubmit(newTransaction)}
               />
               <Button
-                text="Cancel"
+                text={i18n.t('button.cancel')}
                 type="danger"
                 displayFunction={() => {
                   reset();
@@ -159,9 +161,11 @@ const Transaction = ({route}) => {
       </Modal>
 
       <View style={style.header}>
-        <Text style={style.balance}>Balance: {balance} ⭐</Text>
+        <Text style={style.balance}>
+          {i18n.t('transaction.balance')}: {balance} ⭐
+        </Text>
         <Button
-          text="New Transaction"
+          text={i18n.t('button.newTransactionButton')}
           type="primary"
           displayFunction={() => setModalVisible(true)}
         />
@@ -169,35 +173,18 @@ const Transaction = ({route}) => {
       <View style={style.KeysView}>
         <TransactionTypeKey
           color={transactionTypeBackgroundColor.task}
-          text="Task"
+          text={i18n.t('transaction.task')}
         />
         <TransactionTypeKey
           color={transactionTypeBackgroundColor.trade}
-          text="Trade"
+          text={i18n.t('transaction.trade')}
         />
         <TransactionTypeKey
           color={transactionTypeBackgroundColor.penalty}
-          text="Penalty"
+          text={i18n.t('transaction.penalty')}
         />
       </View>
       <View>
-        {/* <ScrollView
-          contentContainerStyle={style.scrollView}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }>
-          {transactions.length === 0 ? (
-
-          ) : (
-            transactions.map(transaction => (
-              <TransactionComponent
-                {...transaction}
-                key={transaction.id}
-                // key={transaction.id.toString()}
-              />
-            ))
-          )}
-        </ScrollView> */}
         <FlatList
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -212,7 +199,9 @@ const Transaction = ({route}) => {
             />
           )}
           ListEmptyComponent={
-            <Text style={style.noTransactions}>{name} has no transaction</Text>
+            <Text style={style.noTransactions}>
+              {i18n.t('transaction.noTransaction', {name: name})}
+            </Text>
           }
         />
       </View>

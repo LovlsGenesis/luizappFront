@@ -4,10 +4,12 @@ import Input from '../../components/input';
 import {useForm} from 'react-hook-form';
 import Button from '../../components/button';
 import {useAuth} from '../../context/AuthContext';
+import {useTranslation} from 'react-i18next';
 
 const SignIn = ({navigation}: any) => {
   const {control, handleSubmit, reset} = useForm();
 
+  const {i18n} = useTranslation(['signIn', 'button', 'input']);
   const {signIn} = useAuth();
 
   const handleSignIn = (params: any) => {
@@ -17,6 +19,9 @@ const SignIn = ({navigation}: any) => {
     } catch (error) {
       Alert.alert(error.response.data.message);
     }
+  };
+  const handleSignUp = () => {
+    navigation.navigate('Register');
   };
 
   const style = StyleSheet.create({
@@ -51,8 +56,22 @@ const SignIn = ({navigation}: any) => {
       <View style={style.input}>
         <Input name="id" control={control} />
         <Input name="password" control={control} secured={true} />
+        <Text
+          style={{
+            textAlign: 'center',
+            marginTop: 10,
+          }}>
+          {i18n.t('signIn.forgotPass')}
+        </Text>
       </View>
-      <Button text="Sign In" displayFunction={handleSubmit(handleSignIn)} />
+      <Button
+        text={i18n.t('button.signIn')}
+        displayFunction={handleSubmit(handleSignIn)}
+      />
+      <Button
+        text={i18n.t('button.createNewAccount')}
+        displayFunction={handleSubmit(handleSignUp)}
+      />
     </View>
   );
 };

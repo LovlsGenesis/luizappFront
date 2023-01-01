@@ -1,0 +1,33 @@
+{
+  "home": {
+    "welcome": "Welcome, {{name}}"
+  },
+  "button": {
+    "newChildButton": "New Child",
+    "createNewChild": "Create new child",
+    "cancel": "Cancel",
+    "newTransactionButton": "New Transaction",
+    "createNewTransaction": "Create new Transaction",
+    "signOut": "Sign Out",
+    "signIn": "Log In",
+    "createNewAccount": "Sign Up",
+    "submit": "Submit"
+  },
+  "transaction": {
+    "noTransaction": "{{name}} has no transactions",
+    "task": "Task",
+    "penalty": "Penalty",
+    "trade": "Trade",
+    "balance": "Balance"
+  },
+  "input": {
+    "selectPlaceholder": "Add {{type}}",
+    "name": "Name",
+    "parent": "Parent",
+    "value": "Value",
+    "description": "Description",
+    "type": "Type",
+    "password": "Password",
+    "parentInfo": "Add your husband or wife ( Not required )"
+  }
+}

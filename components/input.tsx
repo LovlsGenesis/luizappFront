@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TextInput, Text, View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
 import Dropdown from 'react-native-input-select';
 
 import {IInput} from '../types';
+import {useTranslation} from 'react-i18next';
 
 const Input = ({
   name,
@@ -13,12 +14,16 @@ const Input = ({
   options,
   keyboardType = 'default',
 }: IInput) => {
+  const {i18n} = useTranslation(['transaction', 'button', 'transaction']);
+
   const Select = (): JSX.Element => (
     <>
       <Dropdown
         dropdownContainerStyle={inputStyle.dropdownContainer}
         dropdownStyle={inputStyle.dropdown}
-        placeholder={`Add ${name[0].toUpperCase() + name.substr(1)}`}
+        placeholder={i18n.t('input.selectPlaceholder', {
+          type: name[0].toUpperCase() + name.substr(1),
+        })}
         options={options}
         optionLabel={'name'}
         optionValue={'code'}

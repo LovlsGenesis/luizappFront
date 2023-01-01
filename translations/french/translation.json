@@ -1,0 +1,32 @@
+{
+  "home": {
+    "welcome": "Bienvenue, {{name}}"
+  },
+  "button": {
+    "newChildButton": "Nouvel enfant",
+    "createNewChild": "Créer nouvel enfant",
+    "cancel": "Annuler",
+    "newTransactionButton": "Nouvelle transaction",
+    "createNewTransaction": "Créer nouvelle transaction",
+    "signOut": "Déconnexion",
+    "signIn": "Se connecter",
+    "createNewAccount": "Créer un compte",
+    "submit": "Envoyer"
+  },
+  "transaction": {
+    "noTransaction": "{{name}} n'a pas de transactions",
+    "task": "Tâche",
+    "penalty": "Penalité",
+    "trade": "Échange",
+    "balance": "Solde"
+  },
+  "input": {
+    "selectPlaceholder": "Addicioner {{type}}",
+    "name": "Nom",
+    "parent": "Parent",
+    "value": "Valeur",
+    "type": "Type",
+    "password": "Mot de Passe",
+    "description": "Description"
+  }
+}

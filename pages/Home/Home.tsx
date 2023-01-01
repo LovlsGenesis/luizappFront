@@ -8,10 +8,11 @@ import {
   RefreshControl,
 } from 'react-native';
 import {useForm} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
 
 import api from '../../services/api';
 
-import {IChild, IUser} from '../../types';
+import {IChild} from '../../types';
 
 import Child from '../../components/child';
 import Input from '../../components/input';
@@ -26,6 +27,8 @@ const Home = ({navigation}: any) => {
   const {control, handleSubmit, reset} = useForm();
   const {localStorage: user, signOut} = useAuth();
   const [parents, setParents] = useState<any[]>([]);
+
+  const {i18n} = useTranslation(['home', 'button', 'input']);
 
   const getChild = async () => {
     try {
@@ -112,7 +115,7 @@ const Home = ({navigation}: any) => {
     },
     header: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       alignItems: 'center',
       marginVertical: 5,
       marginHorizontal: 10,
@@ -128,7 +131,7 @@ const Home = ({navigation}: any) => {
     <View>
       <Modal isVisible={modalVisible}>
         <Modal.Container>
-          <Modal.Header title="Create new child" />
+          <Modal.Header title={i18n.t('button.createNewChild')} />
           <Modal.Body>
             <Input name="name" control={control} />
             <Input
@@ -141,11 +144,11 @@ const Home = ({navigation}: any) => {
           <Modal.Footer>
             <View style={homeStyle.buttons}>
               <Button
-                text="Create new child"
+                text={i18n.t('button.createNewChild')}
                 displayFunction={handleSubmit(newChild)}
               />
               <Button
-                text="Cancel"
+                text={i18n.t('button.cancel')}
                 type="danger"
                 displayFunction={() => {
                   reset();
@@ -158,12 +161,17 @@ const Home = ({navigation}: any) => {
       </Modal>
 
       <View style={homeStyle.container}>
-        {/* <Button displayFunction={handleSignOut} text="Sign Out" /> */}
+        <Button
+          displayFunction={handleSignOut}
+          text={i18n.t('button.signOut')}
+        />
+        <Text style={homeStyle.welcome}>
+          {i18n.t('home.welcome', {name: user?.name})}
+        </Text>
         <View style={homeStyle.header}>
-          <Text style={homeStyle.welcome}>Welcome, {user?.name}</Text>
           <Button
             displayFunction={() => setModalVisible(!modalVisible)}
-            text="New Child"
+            text={i18n.t('button.newChildButton')}
           />
         </View>
         <View style={{height: '85%'}}>
