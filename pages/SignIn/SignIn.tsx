@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Text, View} from 'react-native';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import Input from '../../components/input';
 import {useForm} from 'react-hook-form';
 import Button from '../../components/button';
@@ -19,11 +19,39 @@ const SignIn = ({navigation}: any) => {
     }
   };
 
+  const style = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    title: {
+      fontSize: 48,
+      fontWeight: '500',
+      textAlign: 'center',
+      marginBottom: 60,
+    },
+    signIn: {
+      fontSize: 24,
+      textAlign: 'center',
+    },
+    form: {
+      flex: 1,
+      justifyContent: 'center',
+      alignSelf: 'center',
+      width: '80%',
+    },
+    input: {
+      marginVertical: 20,
+    },
+  });
+
   return (
-    <View>
-      <Text>Sign in</Text>
-      <Input name="id" control={control} />
-      <Input name="password" control={control} secured={true} />
+    <View style={style.form}>
+      <Text style={style.title}>Luizapp</Text>
+      {/* <Text style={style.signIn}>Sign in</Text> */}
+      <View style={style.input}>
+        <Input name="id" control={control} />
+        <Input name="password" control={control} secured={true} />
+      </View>
       <Button text="Sign In" displayFunction={handleSubmit(handleSignIn)} />
     </View>
   );

@@ -11,7 +11,7 @@ import {useForm} from 'react-hook-form';
 
 import api from '../../services/api';
 
-import {IChild} from '../../types';
+import {IChild, IUser} from '../../types';
 
 import Child from '../../components/child';
 import Input from '../../components/input';
@@ -25,6 +25,7 @@ const Home = ({navigation}: any) => {
   const [child, setChild] = useState<IChild[]>([] as IChild[]);
   const {control, handleSubmit, reset} = useForm();
   const {localStorage: user, signOut} = useAuth();
+  const [parents, setParents] = useState<any[]>([]);
 
   const getChild = async () => {
     try {
@@ -61,8 +62,23 @@ const Home = ({navigation}: any) => {
     setModalVisible(!modalVisible);
   };
 
+  const getParents = async () => {
+    try {
+      const {data} = await api.get('parents');
+      setParents(
+        Object.values(data).map(type => {
+          return {
+            name: type.name,
+            code: type.id,
+          };
+        }),
+      );
+    } catch (error) {}
+  };
+
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
+    await getParents();
     await getChild();
     setRefreshing(false);
   }, []);
@@ -105,6 +121,7 @@ const Home = ({navigation}: any) => {
 
   useEffect(() => {
     getChild();
+    getParents();
   }, []);
 
   return (
@@ -114,6 +131,12 @@ const Home = ({navigation}: any) => {
           <Modal.Header title="Create new child" />
           <Modal.Body>
             <Input name="name" control={control} />
+            <Input
+              name="parent"
+              type="select"
+              options={parents}
+              control={control}
+            />
           </Modal.Body>
           <Modal.Footer>
             <View style={homeStyle.buttons}>

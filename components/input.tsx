@@ -14,16 +14,24 @@ const Input = ({
   keyboardType = 'default',
 }: IInput) => {
   const Select = (): JSX.Element => (
-    <Dropdown
-      dropdownContainerStyle={inputStyle.dropdown}
-      placeholder="Select a type..."
-      options={options}
-      optionLabel={'name'}
-      optionValue={'code'}
-      selectedValue={field.value}
-      onValueChange={field.onChange}
-      primaryColor={'green'}
-    />
+    <>
+      <Dropdown
+        dropdownContainerStyle={inputStyle.dropdownContainer}
+        dropdownStyle={inputStyle.dropdown}
+        placeholder={`Add ${name[0].toUpperCase() + name.substr(1)}`}
+        options={options}
+        optionLabel={'name'}
+        optionValue={'code'}
+        selectedValue={field.value}
+        onValueChange={field.onChange}
+        primaryColor={'green'}
+      />
+      {name === 'parent' && (
+        <Text style={inputStyle.parentInfo}>
+          Add your husband or wife (Not Required)
+        </Text>
+      )}
+    </>
   );
 
   const {field} = useController({
@@ -36,7 +44,7 @@ const Input = ({
     input: {
       width: '75%',
       borderColor: 'black',
-      borderWidth: 1,
+      borderBottomWidth: 1,
       paddingHorizontal: 5,
       paddingVertical: 2,
       alignSelf: 'center',
@@ -47,11 +55,17 @@ const Input = ({
     text: {
       textAlign: 'center',
     },
-    dropdown: {
+    dropdownContainer: {
       marginBottom: 10,
       width: '75%',
       alignSelf: 'center',
     },
+    dropdown: {
+      backgroundColor: 'white',
+      borderWidth: 0,
+      borderBottomWidth: 1,
+    },
+    parentInfo: {textAlign: 'center', fontSize: 10},
   });
 
   return (
