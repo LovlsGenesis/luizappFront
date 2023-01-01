@@ -11,18 +11,20 @@ import {useForm} from 'react-hook-form';
 
 import api from '../../services/api';
 
-import {IChild} from '../../types/types';
+import {IChild} from '../../types';
 
 import Child from '../../components/child';
 import Input from '../../components/input';
 import Button from '../../components/button';
 import {Modal} from '../../components/modal';
+import {useAuth} from '../../context/AuthContext';
 
 const Home = ({navigation}: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [child, setChild] = useState<IChild[]>([] as IChild[]);
   const {control, handleSubmit, reset} = useForm();
+  const {localStorage: user, signOut} = useAuth();
 
   const getChild = async () => {
     try {
@@ -45,7 +47,7 @@ const Home = ({navigation}: any) => {
       const {data} = await api.post('children/new', {
         child: {
           name: params.name,
-          parent_ids: [1],
+          parent_ids: [user?.id],
         },
       });
 
@@ -64,6 +66,10 @@ const Home = ({navigation}: any) => {
     await getChild();
     setRefreshing(false);
   }, []);
+
+  const handleSignOut = () => {
+    signOut();
+  };
 
   const homeStyle = StyleSheet.create({
     container: {
@@ -129,8 +135,9 @@ const Home = ({navigation}: any) => {
       </Modal>
 
       <View style={homeStyle.container}>
+        {/* <Button displayFunction={handleSignOut} text="Sign Out" /> */}
         <View style={homeStyle.header}>
-          <Text style={homeStyle.welcome}>Welcome, Luana</Text>
+          <Text style={homeStyle.welcome}>Welcome, {user?.name}</Text>
           <Button
             displayFunction={() => setModalVisible(!modalVisible)}
             text="New Child"

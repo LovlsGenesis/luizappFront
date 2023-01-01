@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {IChild} from '../types/types';
+import {IChild} from '../types';
 
 const Child = ({id, name, balance}: IChild) => {
   const navigation = useNavigation();

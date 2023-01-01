@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
 
-import {ITransaction, transactionTypeBackgroundColor} from '../types/types';
+import {ITransaction, transactionTypeBackgroundColor} from '../types';
 
 const TransactionComponent = ({
   type,

@@ -44,3 +44,23 @@ export type IInput = {
   secured?: boolean;
   keyboardType?: KeyboardTypeOptions;
 };
+
+export type IUser = {
+  id: number;
+  name: string;
+};
+
+export type ILocalStorage = {
+  token: string;
+  exp: Date;
+  user: IUser;
+};
+
+export type IError = {
+  response: {
+    data: {
+      message: string;
+      errors: string | string[];
+    };
+  };
+};

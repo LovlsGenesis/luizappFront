@@ -3,7 +3,7 @@ import {TextInput, Text, View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
 import Dropdown from 'react-native-input-select';
 
-import {IInput} from '../types/types';
+import {IInput} from '../types';
 
 const Input = ({
   name,

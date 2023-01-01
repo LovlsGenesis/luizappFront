@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
-import {IButton, buttonTypeColor} from '../types/types';
+import {IButton, buttonTypeColor} from '../types';
 
 const Button = ({text, displayFunction, type = 'primary'}: IButton) => {
   const handleOnPress = () => {

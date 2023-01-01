@@ -12,10 +12,11 @@ import api from '../../services/api';
 import TransactionComponent from '../../components/transactionComponent';
 import TransactionTypeKey from '../../components/transactionTypeKey';
 import Button from '../../components/button';
-import {ITransaction, transactionTypeBackgroundColor} from '../../types/types';
+import {ITransaction, transactionTypeBackgroundColor} from '../../types';
 import {Modal} from '../../components/modal';
 import Input from '../../components/input';
 import {useForm} from 'react-hook-form';
+import {useAuth} from '../../context/AuthContext';
 
 const Transaction = ({route}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,6 +28,7 @@ const Transaction = ({route}) => {
   );
   const {id: childId, balance: defaultBalance, name} = route.params;
   const [balance, setBalance] = useState<number>(defaultBalance);
+  const {localStorage: user} = useAuth();
 
   const getTypes = async () => {
     const {data} = await api.get('transactions/types');
@@ -52,13 +54,13 @@ const Transaction = ({route}) => {
     setTransactions(data.transactions);
   };
 
-  const newTransaction = async params => {
+  const newTransaction = async (params: any) => {
     try {
       const {data} = await api.post('transactions/new', {
         transaction: {
           type: params.type,
           value: params.value,
-          parent_id: 1,
+          parent_id: user?.id,
           description: params.description,
         },
         child: {
