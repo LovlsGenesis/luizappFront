@@ -27,6 +27,7 @@
     "value": "Valeur",
     "type": "Type",
     "password": "Mot de Passe",
-    "description": "Description"
+    "description": "Description",
+    "parentInfo": "Ajouter le père ou mère ( Pas obligatoire )"
   }
 }

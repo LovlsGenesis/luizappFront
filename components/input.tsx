@@ -37,9 +37,7 @@ const Input = ({
         primaryColor={'green'}
       />
       {name === 'parent' && (
-        <Text style={inputStyle.parentInfo}>
-          Add your husband or wife (Not Required)
-        </Text>
+        <Text style={inputStyle.parentInfo}>{i18n.t('input.parentInfo')}</Text>
       )}
     </>
   );

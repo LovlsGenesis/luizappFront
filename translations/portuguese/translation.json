@@ -31,6 +31,6 @@
     "description": "Descrição",
     "type": "Tipo",
     "password": "Senha",
-    "parentInfo": "Adiciona o pai / mãe ( Não obrigatorio )"
+    "parentInfo": "Adiciona o pai / mãe ( Não obrigatório )"
   }
 }

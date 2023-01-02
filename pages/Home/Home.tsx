@@ -12,7 +12,7 @@ import {useTranslation} from 'react-i18next';
 
 import api from '../../services/api';
 
-import {IChild} from '../../types';
+import {IChild, IUser} from '../../types';
 
 import Child from '../../components/child';
 import Input from '../../components/input';
@@ -38,7 +38,7 @@ const Home = ({navigation}: any) => {
       const {data} = await api.get('parents/children', {
         params: {
           parent: {
-            id: 1,
+            id: user?.id,
           },
         },
       });
@@ -71,8 +71,11 @@ const Home = ({navigation}: any) => {
   const getParents = async () => {
     try {
       const {data} = await api.get('parents');
+      const removingUser = data.filter((dataInfo: IUser) => {
+        return dataInfo.id !== user?.id;
+      });
       setParents(
-        Object.values(data).map(type => {
+        Object.values(removingUser).map(type => {
           return {
             name: type.name,
             code: type.id,
