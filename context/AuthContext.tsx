@@ -3,31 +3,12 @@ import React, {
   useCallback,
   useState,
   useContext,
-  ReactNode,
   useEffect,
 } from 'react';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {IUser, ILocalStorage} from '../types';
-import {ActivityIndicator, View} from 'react-native';
-
-type SignInCredentials = {
-  id: any;
-  password: any;
-};
-
-type AuthContextData = {
-  loading: boolean;
-  signed: boolean;
-  localStorage: IUser | null;
-  signIn(credentials: any): Promise<void>;
-  signOut(): void;
-};
-
-type AuthProviderProps = {
-  children: ReactNode;
-};
+import {IUser, AuthContextData, AuthProviderProps} from '../types';
 
 const AuthContext = createContext({} as AuthContextData);
 

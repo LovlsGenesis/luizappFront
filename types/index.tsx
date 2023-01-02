@@ -1,3 +1,4 @@
+import {ReactNode} from 'react';
 import {Control} from 'react-hook-form';
 import {KeyboardTypeOptions} from 'react-native';
 
@@ -64,4 +65,16 @@ export type IError = {
       errors: string | string[];
     };
   };
+};
+
+export type AuthContextData = {
+  loading: boolean;
+  signed: boolean;
+  localStorage: IUser | null;
+  signIn(credentials: any): Promise<void>;
+  signOut(): void;
+};
+
+export type AuthProviderProps = {
+  children: ReactNode;
 };
