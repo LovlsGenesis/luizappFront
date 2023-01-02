@@ -42,9 +42,10 @@ function AuthProvider({children}: AuthProviderProps) {
 
       if (storageUser && storageToken) {
         const {exp, token} = JSON.parse(storageToken);
-        if (new Date() < new Date(exp)) {
+        if (new Date() > new Date(exp)) {
           AsyncStorage.clear().then(() => {
             setlocalStorage(null);
+            setLoading(false);
           });
           return;
         }
