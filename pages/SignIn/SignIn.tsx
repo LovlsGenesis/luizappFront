@@ -6,10 +6,12 @@ import Button from '../../components/button';
 import {useAuth} from '../../context/AuthContext';
 import {useTranslation} from 'react-i18next';
 import api from '../../services/api';
+import {useIsFocused} from '@react-navigation/native';
 
 const SignIn = ({navigation}: any) => {
   const {control, handleSubmit, reset} = useForm();
   const [parents, setParents] = useState<any[]>([]);
+  const isFocused = useIsFocused();
 
   const {i18n} = useTranslation(['signIn', 'button', 'input']);
   const {signIn} = useAuth();
@@ -72,8 +74,10 @@ const SignIn = ({navigation}: any) => {
   });
 
   useEffect(() => {
-    getParents();
-  }, []);
+    if (isFocused) {
+      getParents();
+    }
+  }, [isFocused]);
 
   return (
     <View style={style.form}>
