@@ -41,7 +41,14 @@ function AuthProvider({children}: AuthProviderProps) {
       const storageToken = await AsyncStorage.getItem('@Luizapp:token');
 
       if (storageUser && storageToken) {
-        api.defaults.headers.Authorization = `Bearer ${storageToken}`;
+        const {exp, token} = JSON.parse(storageToken);
+        if (new Date() < new Date(exp)) {
+          AsyncStorage.clear().then(() => {
+            setlocalStorage(null);
+          });
+          return;
+        }
+        api.defaults.headers.Authorization = `Bearer ${token}`;
         setlocalStorage(JSON.parse(storageUser));
       }
       setLoading(false);

@@ -19,6 +19,7 @@ const Register = ({navigation}: any) => {
           password: params.password,
         },
       });
+      navigation.navigate('SignIn');
       Alert.alert(data.message);
     } catch (error) {
       const data = error.response.data;
@@ -35,6 +36,10 @@ const Register = ({navigation}: any) => {
     },
     input: {
       marginVertical: 20,
+    },
+    buttons: {
+      justifyContent: 'space-between',
+      height: 90,
     },
   });
 
@@ -53,16 +58,18 @@ const Register = ({navigation}: any) => {
         <Input name="name" control={control} />
         <Input name="password" control={control} secured={true} />
       </View>
-      <Button
-        text={i18n.t('button.submit')}
-        displayFunction={handleSubmit(onSubmit)}
-      />
-      <Button
-        text={i18n.t('button.signIn')}
-        displayFunction={() => {
-          navigation.navigate('SignIn');
-        }}
-      />
+      <View style={style.buttons}>
+        <Button
+          text={i18n.t('button.submit')}
+          displayFunction={handleSubmit(onSubmit)}
+        />
+        <Button
+          text={i18n.t('button.signIn')}
+          displayFunction={() => {
+            navigation.navigate('SignIn');
+          }}
+        />
+      </View>
     </View>
   );
 };

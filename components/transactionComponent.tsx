@@ -23,7 +23,7 @@ const TransactionComponent = ({
       borderWidth: 1,
     },
     name: {
-      fontSize: 24,
+      fontSize: 12,
       color: 'black',
       overflow: 'scroll',
     },

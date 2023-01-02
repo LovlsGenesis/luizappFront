@@ -19,6 +19,7 @@ import Input from '../../components/input';
 import Button from '../../components/button';
 import {Modal} from '../../components/modal';
 import {useAuth} from '../../context/AuthContext';
+import {useIsFocused} from '@react-navigation/native';
 
 const Home = ({navigation}: any) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -27,6 +28,8 @@ const Home = ({navigation}: any) => {
   const {control, handleSubmit, reset} = useForm();
   const {localStorage: user, signOut} = useAuth();
   const [parents, setParents] = useState<any[]>([]);
+
+  const isFocused = useIsFocused();
 
   const {i18n} = useTranslation(['home', 'button', 'input']);
 
@@ -123,9 +126,11 @@ const Home = ({navigation}: any) => {
   });
 
   useEffect(() => {
-    getChild();
-    getParents();
-  }, []);
+    if (isFocused) {
+      getChild();
+      getParents();
+    }
+  }, [isFocused]);
 
   return (
     <View>
@@ -161,10 +166,10 @@ const Home = ({navigation}: any) => {
       </Modal>
 
       <View style={homeStyle.container}>
-        <Button
+        {/* <Button
           displayFunction={handleSignOut}
           text={i18n.t('button.signOut')}
-        />
+        /> */}
         <Text style={homeStyle.welcome}>
           {i18n.t('home.welcome', {name: user?.name})}
         </Text>

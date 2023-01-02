@@ -65,6 +65,10 @@ const SignIn = ({navigation}: any) => {
       textAlign: 'center',
       marginTop: 10,
     },
+    buttons: {
+      justifyContent: 'space-between',
+      height: 90,
+    },
   });
 
   useEffect(() => {
@@ -86,14 +90,16 @@ const SignIn = ({navigation}: any) => {
         <Input name="password" control={control} secured={true} />
         <Text style={style.forgotPass}>{i18n.t('signIn.forgotPass')}</Text>
       </View>
-      <Button
-        text={i18n.t('button.signIn')}
-        displayFunction={handleSubmit(handleSignIn)}
-      />
-      <Button
-        text={i18n.t('button.createNewAccount')}
-        displayFunction={handleSubmit(handleSignUp)}
-      />
+      <View style={style.buttons}>
+        <Button
+          text={i18n.t('button.signIn')}
+          displayFunction={handleSubmit(handleSignIn)}
+        />
+        <Button
+          text={i18n.t('button.createNewAccount')}
+          displayFunction={handleSubmit(handleSignUp)}
+        />
+      </View>
     </View>
   );
 };
