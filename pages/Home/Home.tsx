@@ -54,7 +54,7 @@ const Home = ({navigation}: any) => {
       const {data} = await api.post('children/new', {
         child: {
           name: params.name,
-          parent_ids: [user?.id],
+          parent_ids: [user?.id, params.parent],
         },
       });
 

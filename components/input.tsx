@@ -56,6 +56,7 @@ const Input = ({
       paddingHorizontal: 5,
       paddingVertical: 2,
       alignSelf: 'center',
+      color: 'black',
     },
     margin5: {
       margin: 5,

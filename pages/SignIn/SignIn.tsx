@@ -20,9 +20,7 @@ const SignIn = ({navigation}: any) => {
     try {
       signIn({id: params.login, password: params.password});
       reset();
-    } catch (error) {
-      Alert.alert(error.response.data.message);
-    }
+    } catch (error) {}
   };
 
   const getParents = async () => {

@@ -141,7 +141,6 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
-
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
             externalNativeBuild {
@@ -220,6 +219,8 @@ android {
     }
     buildTypes {
         debug {
+            applicationIdSuffix ".d"
+            versionNameSuffix "-debug"
             signingConfig signingConfigs.debug
         }
         release {
@@ -243,7 +244,6 @@ android {
                 output.versionCodeOverride =
                         defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
-
         }
     }
 }
