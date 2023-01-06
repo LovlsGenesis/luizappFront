@@ -26,8 +26,18 @@
     "parent": "Parent",
     "value": "Valeur",
     "type": "Type",
+    "login": "Compte",
     "password": "Mot de Passe",
     "description": "Description",
     "parentInfo": "Ajouter le père ou mère ( Pas obligatoire )"
+  },
+  "errors": {
+    "type": "Sélectioner un type",
+    "name": "Nom obligatoire",
+    "login": "Sélectioner un compte",
+    "password": "Mot de passe obligatoire",
+    "value": "Valeur obligatoire",
+    "mustBeNumber": "Valeur obligatoire",
+    "minValue": "Valeur minimale de 1"
   }
 }

@@ -26,11 +26,21 @@
   "input": {
     "selectPlaceholder": "Adicionar {{type}}",
     "name": "Nome",
-    "parent": "Pai",
+    "parent": "Pai/Mãe",
     "value": "Valor",
     "description": "Descrição",
     "type": "Tipo",
+    "login": "Conta",
     "password": "Senha",
     "parentInfo": "Adiciona o seu cônjuge ( Não obrigatório )"
+  },
+  "errors": {
+    "type": "Selecione um tipo",
+    "name": "Informe o nome",
+    "login": "Selecione uma conta",
+    "password": "Informe sua senha",
+    "value": "Informe o valor",
+    "mustBeNumber": "Informe um valor",
+    "minValue": "Valor mínimo é 1"
   }
 }

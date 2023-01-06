@@ -230,6 +230,7 @@ android {
         }
     }
 
+    // Comment when running with emulator
     flavorDimensions "env"
     productFlavors {
       staging {

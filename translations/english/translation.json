@@ -27,7 +27,17 @@
     "value": "Value",
     "description": "Description",
     "type": "Type",
+    "login": "Account",
     "password": "Password",
     "parentInfo": "Add your husband or wife ( Not required )"
+  },
+  "errors": {
+    "type": "Please select a type",
+    "name": "Name is required",
+    "login": "Please select an account",
+    "password": "Password is required",
+    "value": "Value is required",
+    "mustBeNumber": "Value is required",
+    "minValue": "1 is the minimum value"
   }
 }

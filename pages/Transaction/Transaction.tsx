@@ -1,27 +1,36 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   RefreshControl,
-  ScrollView,
   FlatList,
   StyleSheet,
   Text,
   View,
   Alert,
 } from 'react-native';
-import api from '../../services/api';
-import TransactionComponent from '../../components/transactionComponent';
-import TransactionTypeKey from '../../components/transactionTypeKey';
-import Button from '../../components/button';
-import {ITransaction, transactionTypeBackgroundColor} from '../../types';
-import {Modal} from '../../components/modal';
-import Input from '../../components/input';
-import {useForm} from 'react-hook-form';
+import {useForm, Controller} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
 import {useAuth} from '../../context/AuthContext';
 import {useTranslation} from 'react-i18next';
 
+import api from '../../services/api';
+import {
+  IFormData,
+  ITransaction,
+  transactionTypeBackgroundColor,
+} from '../../types';
+import {transactionSchema} from '../../types/schemaValidations';
+
+import TransactionComponent from '../../components/transactionComponent';
+import TransactionTypeKey from '../../components/transactionTypeKey';
+import Button from '../../components/button';
+import {Modal} from '../../components/modal';
+import Input from '../../components/input';
+import InputError from '../../components/InputError';
+import {isApiError} from '../../types/ApiError';
+
 const Transaction = ({route}) => {
+  const {i18n} = useTranslation(['transaction', 'button', 'transaction']);
   const [modalVisible, setModalVisible] = useState(false);
-  const {control, handleSubmit, reset} = useForm();
   const [refreshing, setRefreshing] = useState(false);
   const [types, setTypes] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<ITransaction[]>(
@@ -30,7 +39,14 @@ const Transaction = ({route}) => {
   const {id: childId, balance: defaultBalance, name} = route.params;
   const [balance, setBalance] = useState<number>(defaultBalance);
   const {localStorage: user} = useAuth();
-  const {i18n} = useTranslation(['transaction', 'button', 'transaction']);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: {errors},
+  } = useForm<IFormData>({
+    resolver: yupResolver(transactionSchema),
+  });
 
   const getTypes = async () => {
     const {data} = await api.get('transactions/types');
@@ -56,14 +72,14 @@ const Transaction = ({route}) => {
     setTransactions(data.transactions);
   };
 
-  const newTransaction = async (params: any) => {
+  const newTransaction = async ({type, value, description}: IFormData) => {
     try {
       const {data} = await api.post('transactions/new', {
         transaction: {
-          type: params.type,
-          value: params.value,
+          type: type,
+          value: value,
           parent_id: user?.id,
-          description: params.description,
+          description: description,
         },
         child: {
           id: childId,
@@ -74,15 +90,18 @@ const Transaction = ({route}) => {
       setModalVisible(!modalVisible);
       Alert.alert(data.message);
     } catch (error) {
-      Alert.alert(error.response.data.message);
+      if (isApiError(error)) {
+        const {message} = error.response.data;
+        Alert.alert(message);
+      }
     }
   };
 
-  const onRefresh = useCallback(async () => {
+  const onRefresh = async () => {
     setRefreshing(true);
     await getTransactions();
     setRefreshing(false);
-  }, []);
+  };
 
   const style = StyleSheet.create({
     KeysView: {
@@ -132,14 +151,50 @@ const Transaction = ({route}) => {
         <Modal.Container>
           <Modal.Header title={i18n.t('button.createNewTransaction')} />
           <Modal.Body>
-            <Input
-              type="select"
+            <Controller
               name="type"
-              options={types}
               control={control}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  type="select"
+                  name={i18n.t('input.type')}
+                  options={types}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
             />
-            <Input name="value" control={control} keyboardType="numeric" />
-            <Input name="description" control={control} />
+            {errors.type && <InputError message={errors.type?.message} />}
+
+            <Controller
+              name="value"
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <Input
+                  name={i18n.t('input.value')}
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  keyboardType="numeric"
+                />
+              )}
+            />
+            {errors.value && <InputError message={errors.value?.message} />}
+            <Controller
+              name="description"
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <Input
+                  name={i18n.t('input.description')}
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                />
+              )}
+            />
+            {errors.description && (
+              <InputError message={errors.description?.message} />
+            )}
           </Modal.Body>
           <Modal.Footer>
             <View style={style.buttons}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import {TextInput, Text, View, StyleSheet} from 'react-native';
-import {useController} from 'react-hook-form';
 import Dropdown from 'react-native-input-select';
 
 import {IInput} from '../types';
@@ -8,12 +7,14 @@ import {useTranslation} from 'react-i18next';
 
 const Input = ({
   name,
-  control,
   secured = false,
   type,
   options,
   keyboardType = 'default',
   placeholder,
+  value,
+  onChange,
+  onBlur,
 }: IInput) => {
   const {i18n} = useTranslation(['transaction', 'button', 'transaction']);
 
@@ -32,21 +33,15 @@ const Input = ({
         options={options}
         optionLabel={'name'}
         optionValue={'code'}
-        selectedValue={field.value}
-        onValueChange={field.onChange}
+        selectedValue={value}
+        onValueChange={onChange}
         primaryColor={'green'}
       />
-      {name === 'parent' && (
+      {i18n.t('input.parent') === name && (
         <Text style={inputStyle.parentInfo}>{i18n.t('input.parentInfo')}</Text>
       )}
     </>
   );
-
-  const {field} = useController({
-    control,
-    defaultValue: '',
-    name,
-  });
 
   const inputStyle = StyleSheet.create({
     input: {
@@ -86,8 +81,9 @@ const Input = ({
         <Select />
       ) : (
         <TextInput
-          value={field.value}
-          onChangeText={field.onChange}
+          value={value}
+          onChangeText={onChange}
+          onBlur={onBlur}
           secureTextEntry={secured}
           style={inputStyle.input}
           keyboardType={keyboardType}

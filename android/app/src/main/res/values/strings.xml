@@ -1,3 +1,4 @@
 <resources>
+    <!-- Uncomment when running with emulator -->
     <!-- <string name="app_name">Luizapp</string> -->
 </resources>

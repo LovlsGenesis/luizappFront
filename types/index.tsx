@@ -1,5 +1,4 @@
 import {ReactNode} from 'react';
-import {Control} from 'react-hook-form';
 import {KeyboardTypeOptions} from 'react-native';
 
 export type IChild = {
@@ -40,16 +39,24 @@ export const buttonTypeColor = {
 export type IInput = {
   type?: string;
   options?: any[];
-  control: Control;
   name: string;
   secured?: boolean;
   keyboardType?: KeyboardTypeOptions;
   placeholder?: boolean;
+  value: string | number;
+  onChange: () => void;
+  onBlur?: () => void;
 };
 
 export type IUser = {
   id: number;
   name: string;
+};
+
+export type IParent = {
+  name: string;
+  code: number;
+  id?: number;
 };
 
 export type ILocalStorage = {
@@ -77,4 +84,27 @@ export type AuthContextData = {
 
 export type AuthProviderProps = {
   children: ReactNode;
+};
+
+export type IInputError = {
+  message?: any;
+};
+
+export type IFormData = {
+  name: string;
+  login: number;
+  password: string;
+  value: number;
+  description: string;
+  parent: number;
+  type: string;
+};
+
+export type Error = {
+  response: {
+    data: {
+      message: string;
+      errors: string | string[];
+    };
+  };
 };
