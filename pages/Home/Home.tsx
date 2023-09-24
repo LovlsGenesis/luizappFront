@@ -103,10 +103,6 @@ const Home = ({navigation}: any) => {
     setRefreshing(false);
   };
 
-  const handleSignOut = () => {
-    signOut();
-  };
-
   const homeStyle = StyleSheet.create({
     container: {
       height: '100%',
@@ -201,10 +197,6 @@ const Home = ({navigation}: any) => {
       </Modal>
 
       <View style={homeStyle.container}>
-        <Button
-          displayFunction={handleSignOut}
-          text={i18n.t('button.signOut')}
-        />
         <Text style={homeStyle.welcome}>
           {i18n.t('home.welcome', {name: user?.name})}
         </Text>
