@@ -19,7 +19,11 @@ export type ITransaction = {
   updated_at: Date;
 };
 
-export const transactionTypeBackgroundColor = {
+type TransactionTypeBackgroundColor = {
+  [key: string]: string;
+};
+
+export const transactionTypeBackgroundColor: TransactionTypeBackgroundColor = {
   trade: '#FEBE8C',
   penalty: '#FF6464',
   task: '#B3FFAE',
