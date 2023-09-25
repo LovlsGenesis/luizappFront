@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   RefreshControl,
   FlatList,
@@ -6,6 +6,7 @@ import {
   Text,
   View,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -27,8 +28,13 @@ import {Modal} from '../../components/modal';
 import Input from '../../components/input';
 import InputError from '../../components/InputError';
 import {isApiError} from '../../types/ApiError';
+import {RouteProp, useRoute} from '@react-navigation/native';
+// import TransactionPopupMenu from '../../components/transactionPopupMenu';
 
-const Transaction = ({route}) => {
+const Transaction = () => {
+  const route: RouteProp<{
+    params: {id: number; balance: number; name: string};
+  }> = useRoute();
   const {i18n} = useTranslation(['transaction', 'button', 'transaction']);
   const [modalVisible, setModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -48,7 +54,7 @@ const Transaction = ({route}) => {
     resolver: yupResolver(transactionSchema),
   });
 
-  const getTypes = async () => {
+  const getTypes = useCallback(async () => {
     const {data} = await api.get('transactions/types');
     setTypes(
       Object.values(data).map(type => {
@@ -58,23 +64,17 @@ const Transaction = ({route}) => {
         };
       }),
     );
-  };
+  }, []);
 
-  const getTransactions = async () => {
-    const {data} = await api.get('/children/transactions', {
-      params: {
-        child: {
-          id: childId,
-        },
-      },
-    });
+  const getTransactions = useCallback(async () => {
+    const {data} = await api.get(`/children/${childId}/transactions`);
     setBalance(data.balance);
     setTransactions(data.transactions);
-  };
+  }, [childId]);
 
   const newTransaction = async ({type, value, description}: IFormData) => {
     try {
-      const {data} = await api.post('transactions/new', {
+      const {data} = await api.post('transactions', {
         transaction: {
           type: type,
           value: value,
@@ -138,12 +138,15 @@ const Transaction = ({route}) => {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
     },
+    touchableOpacity: {
+      alignSelf: 'flex-start',
+    },
   });
 
   useEffect(() => {
     getTransactions();
     getTypes();
-  }, []);
+  }, [getTransactions, getTypes]);
 
   return (
     <View style={{flex: 1}}>
@@ -247,11 +250,23 @@ const Transaction = ({route}) => {
           contentContainerStyle={style.scrollView}
           data={transactions}
           renderItem={({item, index}) => (
-            <TransactionComponent
-              {...item}
-              key={index}
-              // key={transaction.id.toString()}
-            />
+            <TouchableOpacity
+              onLongPress={() => {}}
+              delayLongPress={1000}
+              style={style.touchableOpacity}>
+              <TransactionComponent
+                {...item}
+                key={index}
+                // key={transaction.id.toString()}
+              />
+              {/* <TransactionPopupMenu>
+                <TransactionComponent
+                  {...item}
+                  key={index}
+                  // key={transaction.id.toString()}
+                />
+              </TransactionPopupMenu> */}
+            </TouchableOpacity>
           )}
           ListEmptyComponent={
             <Text style={style.noTransactions}>
