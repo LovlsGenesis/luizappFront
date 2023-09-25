@@ -25,7 +25,7 @@ const Register = ({navigation}: any) => {
 
   const onSubmit = async ({type, name, password}: IFormData) => {
     try {
-      const {data} = await api.post('parents/new', {
+      const {data} = await api.post('parents', {
         parent: {
           type: type,
           name: name,

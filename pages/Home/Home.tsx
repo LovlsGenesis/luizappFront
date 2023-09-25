@@ -40,7 +40,7 @@ const Home = ({navigation}: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [child, setChild] = useState<IChild[]>([] as IChild[]);
-  const {localStorage: user, signOut} = useAuth();
+  const {localStorage: user} = useAuth();
 
   const getChild = async () => {
     try {
@@ -60,7 +60,7 @@ const Home = ({navigation}: any) => {
 
   const newChild = async ({name, parent}: IFormData) => {
     try {
-      const {data} = await api.post('children/new', {
+      const {data} = await api.post('children', {
         child: {
           name: name,
           parent_ids: [user?.id, parent],
