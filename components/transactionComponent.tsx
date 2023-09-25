@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
 
 import {ITransaction, transactionTypeBackgroundColor} from '../types';
 
