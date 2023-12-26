@@ -41,7 +41,7 @@ function AuthProvider({children}: AuthProviderProps) {
 
   async function signIn({id, password}: any) {
     try {
-      const {data} = await api.post('auth/sign_in', {
+      const {data} = await api.post('/sign_in', {
         parent: {
           id: id,
           password: password,
