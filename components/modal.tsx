@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import RNModal from 'react-native-modal';
+import {secondary, third} from '../types';
 type ModalProps = {
   isVisible: boolean;
   children: React.ReactNode;
@@ -40,11 +41,8 @@ const ModalFooter = ({children}: {children?: React.ReactNode}) => (
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: third,
     borderRadius: 25,
-    borderWidth: 1,
-    borderColor: '#000',
-    borderStyle: 'solid',
   },
   header: {
     alignItems: 'center',
@@ -54,6 +52,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     textAlign: 'center',
     fontSize: 24,
+    color: secondary,
   },
   body: {
     justifyContent: 'center',

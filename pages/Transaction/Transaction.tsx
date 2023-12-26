@@ -17,6 +17,8 @@ import api from '../../services/api';
 import {
   IFormData,
   ITransaction,
+  primary,
+  secondary,
   transactionTypeBackgroundColor,
 } from '../../types';
 import {transactionSchema} from '../../types/schemaValidations';
@@ -29,7 +31,7 @@ import Input from '../../components/input';
 import InputError from '../../components/InputError';
 import {isApiError} from '../../types/ApiError';
 import {RouteProp, useRoute} from '@react-navigation/native';
-// import TransactionPopupMenu from '../../components/transactionPopupMenu';
+import TransactionPopupMenu from '../../components/transactionPopupMenu';
 
 const Transaction = () => {
   const route: RouteProp<{
@@ -59,12 +61,13 @@ const Transaction = () => {
     setTypes(
       Object.values(data).map(type => {
         return {
-          name: type,
+          name: i18n.t(`transaction.${type}`),
+          value: type,
           code: type,
         };
       }),
     );
-  }, []);
+  }, [i18n]);
 
   const getTransactions = useCallback(async () => {
     const {data} = await api.get(`/children/${childId}/transactions`);
@@ -104,13 +107,18 @@ const Transaction = () => {
   };
 
   const style = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: secondary,
+    },
     KeysView: {
       flexDirection: 'row',
       width: '65%',
       justifyContent: 'space-between',
       alignSelf: 'center',
       marginTop: 10,
-      marginBottom: 10,
+      marginBottom: 25,
+      color: primary,
     },
     noTransactions: {
       fontSize: 24,
@@ -118,7 +126,6 @@ const Transaction = () => {
     scrollView: {
       justifyContent: 'center',
       alignItems: 'center',
-      marginVertical: 10,
       flexGrow: 1,
       paddingBottom: 20,
     },
@@ -132,6 +139,7 @@ const Transaction = () => {
     balance: {
       fontSize: 20,
       fontWeight: '500',
+      color: primary,
     },
     buttons: {
       flex: 1,
@@ -149,7 +157,7 @@ const Transaction = () => {
   }, [getTransactions, getTypes]);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={style.container}>
       <Modal isVisible={modalVisible}>
         <Modal.Container>
           <Modal.Header title={i18n.t('button.createNewTransaction')} />
@@ -204,10 +212,11 @@ const Transaction = () => {
               <Button
                 text={i18n.t('button.createNewTransaction')}
                 displayFunction={handleSubmit(newTransaction)}
+                type="secondary"
               />
               <Button
                 text={i18n.t('button.cancel')}
-                type="danger"
+                type="primary"
                 displayFunction={() => {
                   reset();
                   setModalVisible(!modalVisible);
@@ -242,39 +251,37 @@ const Transaction = () => {
           text={i18n.t('transaction.penalty')}
         />
       </View>
-      <View>
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          contentContainerStyle={style.scrollView}
-          data={transactions}
-          renderItem={({item, index}) => (
-            <TouchableOpacity
-              onLongPress={() => {}}
-              delayLongPress={1000}
-              style={style.touchableOpacity}>
-              <TransactionComponent
-                {...item}
-                key={index}
-                // key={transaction.id.toString()}
-              />
-              {/* <TransactionPopupMenu>
+      <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        contentContainerStyle={style.scrollView}
+        data={transactions}
+        renderItem={({item, index}) => (
+          <TouchableOpacity
+            onLongPress={() => {}}
+            delayLongPress={1000}
+            style={style.touchableOpacity}>
+            <TransactionComponent
+              {...item}
+              key={index}
+              // key={transaction.id.toString()}
+            />
+            {/* <TransactionPopupMenu>
                 <TransactionComponent
                   {...item}
                   key={index}
                   // key={transaction.id.toString()}
                 />
               </TransactionPopupMenu> */}
-            </TouchableOpacity>
-          )}
-          ListEmptyComponent={
-            <Text style={style.noTransactions}>
-              {i18n.t('transaction.noTransaction', {name: name})}
-            </Text>
-          }
-        />
-      </View>
+          </TouchableOpacity>
+        )}
+        ListEmptyComponent={
+          <Text style={style.noTransactions}>
+            {i18n.t('transaction.noTransaction', {name: name})}
+          </Text>
+        }
+      />
     </View>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {primary} from '../types';
 
 type IKey = {
   color: string;
@@ -7,11 +8,11 @@ type IKey = {
 };
 
 const TransactionTypeKey = ({color, text}: IKey) => {
-  const test = StyleSheet.create({
-    test: {
+  const TransactionTypeKeyStyle = StyleSheet.create({
+    box: {
       height: 15,
       width: 15,
-      borderColor: 'black',
+      borderColor: primary,
       borderWidth: 1,
       backgroundColor: color,
       marginRight: 5,
@@ -20,12 +21,15 @@ const TransactionTypeKey = ({color, text}: IKey) => {
     viewStyle: {
       flexDirection: 'row',
     },
+    text: {
+      color: primary,
+    },
   });
 
   return (
-    <View style={test.viewStyle}>
-      <View style={test.test} />
-      <Text>{text}</Text>
+    <View style={TransactionTypeKeyStyle.viewStyle}>
+      <View style={TransactionTypeKeyStyle.box} />
+      <Text style={TransactionTypeKeyStyle.text}>{text}</Text>
     </View>
   );
 };

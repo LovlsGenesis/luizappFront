@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
-import {IButton, buttonTypeColor} from '../types';
+import {IButton, buttonTypeColor, buttonTextColor} from '../types';
 
 const Button = ({text, displayFunction, type = 'primary'}: IButton) => {
   const handleOnPress = () => {
@@ -19,7 +19,7 @@ const Button = ({text, displayFunction, type = 'primary'}: IButton) => {
     text: {
       fontWeight: '500',
       textAlign: 'center',
-      color: 'white',
+      color: buttonTextColor[type],
     },
   });
   return (

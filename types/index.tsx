@@ -1,6 +1,14 @@
 import {ReactNode} from 'react';
 import {KeyboardTypeOptions} from 'react-native';
 
+export const primary = '#2F2032';
+export const secondary = '#E0D3DE';
+export const third = '#75507C';
+
+export const task = '#43C76A';
+export const penalty = '#F72C25';
+export const trade = '#F7B32B';
+
 export type IChild = {
   id?: number;
   name: string;
@@ -24,9 +32,9 @@ type TransactionTypeBackgroundColor = {
 };
 
 export const transactionTypeBackgroundColor: TransactionTypeBackgroundColor = {
-  trade: '#FEBE8C',
-  penalty: '#FF6464',
-  task: '#B3FFAE',
+  trade: trade,
+  penalty: penalty,
+  task: task,
 };
 
 export type IButton = {
@@ -36,8 +44,13 @@ export type IButton = {
 };
 
 export const buttonTypeColor = {
-  danger: 'red',
-  primary: '#2196F3',
+  primary: primary,
+  secondary: secondary,
+};
+
+export const buttonTextColor = {
+  primary: secondary,
+  secondary: primary,
 };
 
 export type IInput = {

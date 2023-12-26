@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {IChild} from '../types';
+import {IChild, secondary, third} from '../types';
 
 const Child = ({id, name, balance}: IChild) => {
   const navigation = useNavigation();
@@ -12,17 +12,19 @@ const Child = ({id, name, balance}: IChild) => {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      width: '75%',
+      width: '100%',
       maxHeight: 65,
-      backgroundColor: 'grey',
+      backgroundColor: third,
       padding: 15,
       margin: 5,
       borderRadius: 5,
     },
     name: {
       fontSize: 24,
+      color: secondary,
     },
     balance: {
+      color: secondary,
       fontSize: 18,
       alignSelf: 'center',
     },

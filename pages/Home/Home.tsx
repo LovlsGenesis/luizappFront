@@ -14,8 +14,8 @@ import {useTranslation} from 'react-i18next';
 import api from '../../services/api';
 
 import {childSchema} from '../../types/schemaValidations';
-import {IChild, IFormData, IParent} from '../../types';
-import {isApiError} from '../../types/ApiError';
+import {IChild, IFormData, IParent, primary, secondary} from '../../types';
+import {handleApiError} from '../../types/ApiError';
 
 import Child from '../../components/child';
 import Input from '../../components/input';
@@ -44,17 +44,10 @@ const Home = ({navigation}: any) => {
 
   const getChild = async () => {
     try {
-      const {data} = await api.get('parents/children', {
-        params: {
-          parent: {
-            id: user?.id,
-          },
-        },
-      });
+      const {data} = await api.get(`parents/${user?.id}/children`);
       setChild(data.child);
     } catch (error) {
-      const data = error.response.data;
-      Alert.alert(data.message, `${data.errors}`);
+      handleApiError(error);
     }
   };
 
@@ -71,10 +64,7 @@ const Home = ({navigation}: any) => {
       reset();
       Alert.alert(data.message);
     } catch (error) {
-      if (isApiError(error)) {
-        const {message, errors: apiErrors} = error.response.data;
-        Alert.alert(message, `${apiErrors}`);
-      }
+      handleApiError(error);
     }
     setModalVisible(!modalVisible);
   };
@@ -106,6 +96,7 @@ const Home = ({navigation}: any) => {
   const homeStyle = StyleSheet.create({
     container: {
       height: '100%',
+      backgroundColor: secondary,
     },
     childList: {
       justifyContent: child.length === 1 ? 'flex-start' : 'space-evenly',
@@ -117,6 +108,7 @@ const Home = ({navigation}: any) => {
     welcome: {
       alignSelf: 'center',
       fontSize: 24,
+      color: primary,
     },
     button: {
       width: '25%',
@@ -181,11 +173,12 @@ const Home = ({navigation}: any) => {
             <View style={homeStyle.buttons}>
               <Button
                 text={i18n.t('button.createNewChild')}
+                type="secondary"
                 displayFunction={handleSubmit(newChild)}
               />
               <Button
                 text={i18n.t('button.cancel')}
-                type="danger"
+                type="primary"
                 displayFunction={() => {
                   reset();
                   setModalVisible(!modalVisible);

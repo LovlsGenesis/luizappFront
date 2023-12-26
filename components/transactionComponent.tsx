@@ -1,7 +1,12 @@
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 
-import {ITransaction, transactionTypeBackgroundColor} from '../types';
+import {
+  ITransaction,
+  secondary,
+  third,
+  transactionTypeBackgroundColor,
+} from '../types';
 
 const TransactionComponent = ({
   type,
@@ -14,28 +19,34 @@ const TransactionComponent = ({
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      width: '75%',
+      width: '95%',
       maxHeight: 65,
-      backgroundColor: transactionTypeBackgroundColor[type],
+      backgroundColor: third,
       padding: 15,
-      margin: 5,
-      borderRadius: 25,
-      borderWidth: 1,
+      margin: 1.5,
+      borderRadius: 5,
+      borderBottomWidth: 2,
+      borderBottomColor: transactionTypeBackgroundColor[type],
     },
     name: {
       fontSize: 12,
-      color: 'black',
+      color: secondary,
       overflow: 'scroll',
     },
     balance: {
+      color: secondary,
       flexDirection: 'row',
       fontSize: 18,
       textAlign: 'center',
       marginLeft: 'auto',
     },
     infos: {
+      color: secondary,
       alignSelf: 'center',
       width: '70%',
+    },
+    parent: {
+      color: secondary,
     },
   });
 
@@ -45,7 +56,7 @@ const TransactionComponent = ({
         <Text style={transactionStyle.name}>
           {description || 'Sem Descrição'}
         </Text>
-        <Text>{parent}</Text>
+        <Text style={transactionStyle.parent}>{parent}</Text>
       </View>
       <Text style={transactionStyle.balance}>{value} ⭐</Text>
     </View>
