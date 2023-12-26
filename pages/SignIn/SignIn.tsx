@@ -12,7 +12,7 @@ import Button from '../../components/button';
 import Input from '../../components/input';
 import InputError from '../../components/InputError';
 import {loginSchema} from '../../types/schemaValidations';
-import {IFormData, IParent} from '../../types';
+import {IFormData, IParent, primary, secondary, third} from '../../types';
 
 const SignIn = ({navigation}: any) => {
   const {
@@ -57,16 +57,20 @@ const SignIn = ({navigation}: any) => {
       fontWeight: '500',
       textAlign: 'center',
       marginBottom: 60,
+      color: primary,
     },
     signIn: {
       fontSize: 24,
       textAlign: 'center',
     },
+    container: {
+      backgroundColor: secondary,
+    },
     form: {
-      flex: 1,
       justifyContent: 'center',
       alignSelf: 'center',
-      width: '80%',
+      height: '100%',
+      width: '85%',
     },
     input: {
       marginVertical: 20,
@@ -74,6 +78,7 @@ const SignIn = ({navigation}: any) => {
     forgotPass: {
       textAlign: 'center',
       marginTop: 10,
+      color: secondary,
     },
     buttons: {
       justifyContent: 'space-between',
@@ -88,51 +93,55 @@ const SignIn = ({navigation}: any) => {
   }, [isFocused]);
 
   return (
-    <View style={style.form}>
-      <Text style={style.title}>Luizapp</Text>
-      {/* <Text style={style.signIn}>Sign in</Text> */}
-      <View style={style.input}>
-        <Controller
-          name="login"
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <Input
-              name={i18n.t('input.login')}
-              placeholder={false}
-              type="select"
-              options={parents}
-              onChange={onChange}
-              value={value}
-            />
-          )}
-        />
-        {errors.login && <InputError message={errors.login?.message} />}
+    <View style={style.container}>
+      <View style={style.form}>
+        <Text style={style.title}>Luizapp</Text>
+        {/* <Text style={style.signIn}>Sign in</Text> */}
+        <View style={style.input}>
+          <Controller
+            name="login"
+            control={control}
+            render={({field: {onChange, value}}) => (
+              <Input
+                name={i18n.t('input.login')}
+                placeholder={false}
+                type="select"
+                options={parents}
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
+          {errors.login && <InputError message={errors.login?.message} />}
 
-        <Controller
-          control={control}
-          name="password"
-          render={({field: {onChange, value}}) => (
-            <Input
-              name={i18n.t('input.password')}
-              secured={true}
-              onChange={onChange}
-              value={value}
-            />
-          )}
-        />
-        {errors.password && <InputError message={errors.password?.message} />}
+          <Controller
+            control={control}
+            name="password"
+            render={({field: {onChange, value}}) => (
+              <Input
+                name={i18n.t('input.password')}
+                secured={true}
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
+          {errors.password && <InputError message={errors.password?.message} />}
 
-        <Text style={style.forgotPass}>{i18n.t('signIn.forgotPass')}</Text>
-      </View>
-      <View style={style.buttons}>
-        <Button
-          text={i18n.t('button.signIn')}
-          displayFunction={handleSubmit(handleSignIn)}
-        />
-        <Button
-          text={i18n.t('button.createNewAccount')}
-          displayFunction={handleSignUp}
-        />
+          <Text style={style.forgotPass}>{i18n.t('signIn.forgotPass')}</Text>
+        </View>
+        <View style={style.buttons}>
+          <Button
+            text={i18n.t('button.signIn')}
+            type="third"
+            displayFunction={handleSubmit(handleSignIn)}
+          />
+          <Button
+            text={i18n.t('button.createNewAccount')}
+            type="primary"
+            displayFunction={handleSignUp}
+          />
+        </View>
       </View>
     </View>
   );

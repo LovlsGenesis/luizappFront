@@ -171,6 +171,7 @@ const Transaction = () => {
                   name={i18n.t('input.type')}
                   options={types}
                   value={value}
+                  color="secondary"
                   onChange={onChange}
                 />
               )}
@@ -184,6 +185,7 @@ const Transaction = () => {
                 <Input
                   name={i18n.t('input.value')}
                   value={value}
+                  color="secondary"
                   onChange={onChange}
                   onBlur={onBlur}
                   keyboardType="numeric"
@@ -198,6 +200,7 @@ const Transaction = () => {
                 <Input
                   name={i18n.t('input.description')}
                   value={value}
+                  color="secondary"
                   onChange={onChange}
                   onBlur={onBlur}
                 />

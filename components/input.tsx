@@ -2,7 +2,7 @@ import React from 'react';
 import {TextInput, Text, View, StyleSheet} from 'react-native';
 import Dropdown from 'react-native-input-select';
 
-import {IInput, secondary} from '../types';
+import {IInput, buttonTextColor, buttonTypeColor, secondary} from '../types';
 import {useTranslation} from 'react-i18next';
 
 const Input = ({
@@ -13,6 +13,7 @@ const Input = ({
   keyboardType = 'default',
   placeholder,
   value,
+  color = secondary,
   onChange,
   onBlur,
 }: IInput) => {
@@ -46,18 +47,18 @@ const Input = ({
   const inputStyle = StyleSheet.create({
     input: {
       width: '75%',
-      borderColor: secondary,
+      borderColor: buttonTypeColor[color],
       borderBottomWidth: 1,
       paddingHorizontal: 5,
       paddingVertical: 2,
       alignSelf: 'center',
-      color: secondary,
+      color: buttonTypeColor[color],
     },
     margin5: {
       margin: 5,
     },
     text: {
-      color: secondary,
+      color: buttonTypeColor[color],
       textAlign: 'center',
     },
     dropdownContainer: {
@@ -66,10 +67,15 @@ const Input = ({
       alignSelf: 'center',
     },
     dropdown: {
-      backgroundColor: secondary,
+      backgroundColor: buttonTypeColor[color],
       borderWidth: 0,
+      borderBottomWidth: 1,
     },
-    parentInfo: {textAlign: 'center', fontSize: 10},
+    parentInfo: {
+      textAlign: 'center',
+      fontSize: 10,
+      color: buttonTypeColor[color],
+    },
   });
 
   return (

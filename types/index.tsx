@@ -46,11 +46,13 @@ export type IButton = {
 export const buttonTypeColor = {
   primary: primary,
   secondary: secondary,
+  third: third,
 };
 
 export const buttonTextColor = {
   primary: secondary,
   secondary: primary,
+  third: secondary,
 };
 
 export type IInput = {

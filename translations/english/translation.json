@@ -11,7 +11,8 @@
     "signOut": "Sign Out",
     "signIn": "Log In",
     "createNewAccount": "Sign Up",
-    "submit": "Submit"
+    "submit": "Submit",
+    "back": "Back"
   },
   "transaction": {
     "noTransaction": "{{name}} has no transactions",
@@ -24,6 +25,8 @@
     "selectPlaceholder": "Add {{type}}",
     "name": "Name",
     "parent": "Parent",
+    "father": "Father",
+    "mother": "Mother",
     "value": "Value",
     "description": "Description",
     "type": "Type",

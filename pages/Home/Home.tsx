@@ -148,6 +148,7 @@ const Home = ({navigation}: any) => {
                 <Input
                   name={i18n.t('input.name')}
                   value={value}
+                  color="secondary"
                   onChange={onChange}
                   onBlur={onBlur}
                 />
@@ -164,6 +165,7 @@ const Home = ({navigation}: any) => {
                   type="select"
                   options={parents}
                   value={value}
+                  color="secondary"
                   onChange={onChange}
                 />
               )}

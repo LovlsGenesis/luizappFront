@@ -1,4 +1,7 @@
 {
+  "screens": {
+    "mathematic": "Matemática"
+  },
   "home": {
     "welcome": "Bem vindo, {{name}}"
   },
@@ -14,7 +17,8 @@
     "signOut": "Sair",
     "signIn": "Conectar",
     "createNewAccount": "Criar conta",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "back": "Voltar"
   },
   "transaction": {
     "noTransaction":"{{name}} não tem transação",
@@ -27,6 +31,8 @@
     "selectPlaceholder": "Adicionar {{type}}",
     "name": "Nome",
     "parent": "Pai/Mãe",
+    "father": "Pai",
+    "mother": "Mãe",
     "value": "Valor",
     "description": "Descrição",
     "type": "Tipo",

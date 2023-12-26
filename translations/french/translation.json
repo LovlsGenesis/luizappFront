@@ -11,7 +11,8 @@
     "signOut": "Déconnexion",
     "signIn": "Se connecter",
     "createNewAccount": "Créer un compte",
-    "submit": "Envoyer"
+    "submit": "Envoyer",
+    "back": "Retour"
   },
   "transaction": {
     "noTransaction": "{{name}} n'a pas de transactions",
@@ -24,6 +25,8 @@
     "selectPlaceholder": "Addicioner {{type}}",
     "name": "Nom",
     "parent": "Parent",
+    "father": "Père",
+    "mother": "Mère",
     "value": "Valeur",
     "type": "Type",
     "login": "Compte",

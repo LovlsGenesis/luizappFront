@@ -5,6 +5,8 @@ export function handleApiError(error: unknown) {
   if (isApiError(error)) {
     const {message, errors: apiErrors} = error.response.data;
     Alert.alert(message, `${apiErrors}`);
+  } else {
+    Alert.alert(error.message);
   }
 }
 
